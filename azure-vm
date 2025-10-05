@@ -1,0 +1,54 @@
+Prepare
+
+Ensure az CLI installed and you’re logged in:
+
+az login
+az account set --subscription "<your-subscription-id>"
+
+
+Create resource group:
+
+az group create --name cp-foss-rg --location eastus
+
+
+Create VM (example):
+
+az vm create \
+  --resource-group cp-foss-rg \
+  --name cp-foss-vm \
+  --image UbuntuLTS \
+  --size Standard_B2s \
+  --admin-username azureuser \
+  --ssh-key-values ~/.ssh/id_rsa.pub \
+  --public-ip-address-dns-name cp-foss-<unique> \
+  --output json
+
+
+Open ports (adjust per your needs; only open what you need):
+
+az vm open-port --resource-group cp-foss-rg --name cp-foss-vm --port 22
+az vm open-port --resource-group cp-foss-rg --name cp-foss-vm --port 80
+az vm open-port --resource-group cp-foss-rg --name cp-foss-vm --port 443
+az vm open-port --resource-group cp-foss-rg --name cp-foss-vm --port 3306
+az vm open-port --resource-group cp-foss-rg --name cp-foss-vm --port 9999
+
+
+Automatic provisioning (recommended)
+
+Use the Custom Script Extension to run your install scripts during or right after VM creation:
+
+az vm extension set \
+  --publisher Microsoft.Azure.Extensions \
+  --name CustomScript \
+  --resource-group cp-foss-rg \
+  --vm-name cp-foss-vm \
+  --settings '{"fileUris": ["https://<your-bucket>/install_cloudpanel.sh","https://<your-bucket>/install_fossbilling.sh"], "commandToExecute": "bash install_cloudpanel.sh && bash install_fossbilling.sh"}'
+
+
+Verify: get public IP and test:
+
+az vm show -d -g cp-foss-rg -n cp-foss-vm --query publicIps -o tsv
+curl -I http://<PUBLIC_IP>
+
+
+Troubleshoot: if VM creation fails, run az vm show -g cp-foss-rg -n cp-foss-vm and check provisioning state. Look in the Azure Portal activity log for errors.
