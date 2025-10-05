@@ -1,0 +1,22 @@
+# Azure
+AZURE_SUBSCRIPTION_ID=
+AZURE_RESOURCE_GROUP=cp-foss-rg
+AZURE_LOCATION=eastus
+
+# VM
+VM_NAME=cp-foss-vm
+SSH_PUBLIC_KEY_PATH=~/.ssh/id_rsa.pub
+DOMAIN=example.com
+
+# Database
+DB_NAME=fossbilling
+DB_USER=foss
+DB_PASSWORD=changeme
+
+# FOSSBilling admin
+FOSS_ADMIN_EMAIL=admin@example.com
+FOSS_ADMIN_PASSWORD=ChangeMe123!
+
+# Webhook
+WEBHOOK_SECRET=replace_with_generated_secret
+CLOUDPANEL_API_URL=https://cloudpanel.example:9999/api
