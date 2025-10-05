@@ -1,0 +1,49 @@
+Repository layout (recommended):
+
+ansible/
+├─ inventory/
+│  └─ hosts
+├─ group_vars/
+│  └─ all.yml
+├─ roles/
+│  ├─ cloudpanel/
+│  │  └─ tasks/main.yml
+│  └─ fossbilling/
+│     └─ tasks/main.yml
+└─ playbook.yml
+
+
+playbook.yml (minimal example):
+
+- hosts: web
+  become: true
+  roles:
+    - role: cloudpanel
+    - role: fossbilling
+
+
+Inventory: add your VM(s):
+
+[web]
+13.82.211.100 ansible_user=azureuser ansible_ssh_private_key_file=~/.ssh/id_rsa
+
+
+Secrets: use Ansible Vault for DB passwords and API keys:
+
+ansible-vault create group_vars/vault.yml
+ansible-playbook -i inventory/hosts playbook.yml --ask-vault-pass
+
+
+Run in check mode first:
+
+ansible-playbook -i inventory/hosts playbook.yml --check --diff
+
+
+Common tags: add tags so you can run only CloudPanel or only FOSSBilling:
+
+ansible-playbook -i inventory/hosts playbook.yml --tags cloudpanel
+
+
+Idempotence: design tasks so running the playbook twice is safe.
+
+Troubleshoot: increase verbosity -vvv to see which task fails and inspect remote logs.
