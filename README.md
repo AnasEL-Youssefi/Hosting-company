@@ -20,39 +20,3 @@ Features
 
 📊 Documentation and Architecture Overview
 
-cloudpanel-fossbilling/
-├─ README.md                 # Main project documentation
-├─ LICENSE                   # Open-source license
-├─ provision/                # Azure deployment and setup
-│  ├─ azure vm deployement   # Azure VM setup configuration
-│  ├─ provision-scripts/     # Automated install scripts
-│  │   ├─ install cloudpanel.sh
-│  │   ├─ install fossbilling.sh
-│  │   └─ generate webhook.sh
-├─ ansible/
-│  ├─ playbook.yml           # Main Ansible playbook for provisioning
-├─ docs/
-│  ├─ architecture.md        # Architecture and integration documentation
-├─ examples/
-│  ├─ sample_env.example     # Example environment variables file
-└─ .github/workflows/
-   ├─ ci.yml                 # GitHub Actions for CI/CD
-
-
- 🧾 Prerequisites
-
-Make sure you have:
-
-An Azure account
-
-SSH access to your VM
-
-Installed:
-
-git
-
-ansible
-
-bash
-
-az cli (for Azure automation)
