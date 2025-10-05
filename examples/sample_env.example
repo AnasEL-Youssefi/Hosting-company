@@ -20,3 +20,17 @@ FOSS_ADMIN_PASSWORD=ChangeMe123!
 # Webhook
 WEBHOOK_SECRET=replace_with_generated_secret
 CLOUDPANEL_API_URL=https://cloudpanel.example:9999/api
+
+
+
+Usage:
+
+cp examples/sample_env.example .env
+# edit .env with secure values
+
+
+Safety:
+
+Add .env to .gitignore.
+
+Recommend storing production secrets in Azure Key Vault or Ansible Vault.
